@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
+const ETHRSCAN_API = process.env.ETHRSCAN_API;
+const API_KEY = process.env.API_KEY;
+const SORT_RESULTS = process.env.SORT_RESULTS;
+const MODULE = process.env.MODULE;
+const ACTION = process.env.ACTION;
+const START_BLOCK = parseInt(process.env.START_BLOCK);
+const END_BLOCK = parseInt(process.env.END_BLOCK);
+const OFFSET = parseInt(process.env.OFFSET);
+
 export default (ethereumAdress, pageNumber) => {
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -12,17 +22,17 @@ export default (ethereumAdress, pageNumber) => {
             var cancel;
             (async () => {
                 setIsLoading(true);
-                const { data: { status, result } } = await axios.get('https://api.etherscan.io/api', {
+                const { data: { status, result } } = await axios.get(ETHRSCAN_API, {
                     params: {
-                        module: 'account',
-                        action: 'txlist',
+                        module: MODULE,
+                        action: ACTION,
                         address: ethereumAdress,
-                        startblock: 0,
-                        endblock: 99999999,
+                        startblock: START_BLOCK,
+                        endblock: END_BLOCK,
                         page: pageNumber,
-                        offset: 20,
-                        sort: 'asc',
-                        apikey: '3QVB3K2WRC6EG1UF3RVPD9TC4GI6E4SGA1'
+                        offset: OFFSET,
+                        sort: SORT_RESULTS,
+                        apikey: API_KEY,
                     },
                     cancelToken: new axios.CancelToken(c => cancel = c)
                 })

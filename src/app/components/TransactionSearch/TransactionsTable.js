@@ -66,9 +66,9 @@ export default ({ transactions, setPageNumber, isLoading, hasMore }) => {
                 {
                     transactions.map((tran, index) => {
                         if (transactions.length === index + 1) {
-                            return <Transaction reference={lastTransactionRef} key={tran.hash} transaction={tran} />
+                            return <Transaction key={index} reference={lastTransactionRef} key={tran.hash} transaction={tran} />
                         } else {
-                            return <Transaction key={tran.hash} transaction={tran} />
+                            return <Transaction key={index} transaction={tran} />
                         }
                     })
                 }
